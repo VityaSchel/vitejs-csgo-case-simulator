@@ -10,25 +10,6 @@
     background-color: #1D262F;
     color: #fff;
 
-    .switch {
-      display: flex;
-      justify-content: center;
-      background-color: #1B2730;
-
-      .tab {
-        color: #77c2f7;
-        padding: 10px 45px;
-
-        &.enabled {
-          background: linear-gradient(to bottom, #6997bb, #5486ae);
-        }
-      }
-
-      a {
-        text-decoration: none;
-      }
-    }
-
     .users,
     .items {
       padding: 50px;
@@ -64,6 +45,10 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
+
+      .buyButton {
+        cursor: pointer;
+      }
     }
   }
 }

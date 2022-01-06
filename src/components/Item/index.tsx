@@ -8,6 +8,7 @@ export default function Item(props:object) {
     <div className={styles.item}>
       <div className={styles.item}>
         <div style={{ backgroundImage: `url(${item.image})` }} className={styles.img} />
+        <span className={styles.price}>{item.price}$</span>
       </div>
       <div className={[styles.info, styles[`rarity-${item.rarity}`]].join(' ')}>
         <span className={styles.name}>{props.name}</span>

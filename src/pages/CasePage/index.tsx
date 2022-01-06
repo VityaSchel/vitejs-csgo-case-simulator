@@ -49,6 +49,7 @@ function CaseInfo(props:object) {
         item={popupItem}
         onContinue={() => navigate('/')}
         description='Вы получили новый предмет!'
+        button='Продолжить'
       />}
     </>
   )
