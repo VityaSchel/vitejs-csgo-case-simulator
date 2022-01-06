@@ -2,7 +2,7 @@ import Dexie from 'dexie'
 import fakeIndexedDB from 'fake-indexeddb'
 import fakeIDBKeyRange from 'fake-indexeddb/lib/FDBKeyRange'
 
-const indexedDBDisabled = window.location.host.endsWith('.onion')
+export const indexedDBDisabled = window.location.host.endsWith('.onion')
 if(indexedDBDisabled) {
   Dexie.dependencies.indexedDB = fakeIndexedDB
   Dexie.dependencies.IDBKeyRange = fakeIDBKeyRange

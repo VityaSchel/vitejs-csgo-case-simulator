@@ -38,6 +38,7 @@ const chancedRandom = chances => {
 
 export default function Roulette(props:object) {
   const [properties, setProperties] = React.useState()
+  const [margin, setMargin] = React.useState(0)
 
   React.useEffect(() => {
     const getRandomItem = chances => {
@@ -51,27 +52,27 @@ export default function Roulette(props:object) {
     const resultIndex = _.random(40, 60)
     const innerOffset = _.random(0,0.99)
 
-    setTimeout(() => {
-      setProperties({
-        result: result.name,
-        items: [
-          ...new Array(resultIndex).fill().map(() => getRandomItem(fakeChances).name),
-          result.name,
-          ...new Array(4).fill().map(() => getRandomItem(fakeChances).name)
-        ],
-        offset: itemWidth*(resultIndex+innerOffset)-250
-      })
-    }, 0)
+    setProperties({
+      result: result.name,
+      items: [
+        ...new Array(resultIndex).fill().map(() => getRandomItem(fakeChances).name),
+        result.name,
+        ...new Array(4).fill().map(() => getRandomItem(fakeChances).name)
+      ],
+      offset: itemWidth*(resultIndex+innerOffset)-250
+    })
 
     setTimeout(() => props.onDrop(result), 10000)
   }, [])
+
+  React.useEffect(() => setMargin(-properties?.offset), [properties?.offset])
 
   return (
     <div className={styles.container}>
       <div className={styles.display}>
         <div className={styles.screen} />
         <div className={styles.divider} />
-        <div className={styles.roller} style={{ marginLeft: -properties?.offset ?? 0 }}>
+        <div className={styles.roller} style={{ marginLeft: margin }}>
           {properties?.items?.map((item, i) => <Item name={item} key={i} />)}
         </div>
       </div>

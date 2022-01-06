@@ -2,11 +2,10 @@ import React from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import db from '/db'
+import db, { indexedDBDisabled } from '/db'
 import styles from './styles.module.scss'
 import Button from '/components/Button/index'
 import _ from 'lodash'
-import getRandomAvatar from 'random-steam-avatar'
 
 export default function Users() {
   const users = useLiveQuery(() => db.users.toArray())
@@ -22,8 +21,8 @@ export default function Users() {
       return `${firstName} ${lastName}`
     }
 
-    const avatars = await getRandomAvatar()
-    await db.users.add({ name: randomName(), balance: 100, avatar: avatars[0] })
+    const avatars = (await import('/lib/avatars')).default
+    await db.users.add({ name: randomName(), balance: 100, avatar: _.sample(avatars) })
     setCreating(false)
   }
 
@@ -51,6 +50,7 @@ export default function Users() {
               : 'Создать пользователя'
             }
           </Button>
+          {indexedDBDisabled && <div>Осторожно! Этот браузер запрещает сохранение данных в память, поэтому изменения сбросятся после перезагрузки страницы или закрытия вкладки.</div>}
         </div>}
       </div>
     </div>
