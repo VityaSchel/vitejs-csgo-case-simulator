@@ -51,15 +51,17 @@ export default function Roulette(props:object) {
     const resultIndex = _.random(40, 60)
     const innerOffset = _.random(0,0.99)
 
-    setProperties({
-      result: result.name,
-      items: [
-        ...new Array(resultIndex).fill().map(() => getRandomItem(fakeChances).name),
-        result.name,
-        ...new Array(4).fill().map(() => getRandomItem(fakeChances).name)
-      ],
-      offset: itemWidth*(resultIndex+innerOffset)-250
-    })
+    setTimeout(() => {
+      setProperties({
+        result: result.name,
+        items: [
+          ...new Array(resultIndex).fill().map(() => getRandomItem(fakeChances).name),
+          result.name,
+          ...new Array(4).fill().map(() => getRandomItem(fakeChances).name)
+        ],
+        offset: itemWidth*(resultIndex+innerOffset)-250
+      })
+    }, 0)
 
     setTimeout(() => props.onDrop(result), 10000)
   }, [])
@@ -69,7 +71,7 @@ export default function Roulette(props:object) {
       <div className={styles.display}>
         <div className={styles.screen} />
         <div className={styles.divider} />
-        <div className={styles.roller} style={{ marginLeft: -properties?.offset }}>
+        <div className={styles.roller} style={{ marginLeft: -properties?.offset ?? 0 }}>
           {properties?.items?.map((item, i) => <Item name={item} key={i} />)}
         </div>
       </div>

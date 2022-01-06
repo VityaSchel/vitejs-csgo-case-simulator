@@ -23,7 +23,7 @@ export default function Users() {
     }
 
     const avatars = await getRandomAvatar()
-    await db.users.add({ name: randomName(), balance: 0, avatar: avatars[0] })
+    await db.users.add({ name: randomName(), balance: 100, avatar: avatars[0] })
     setCreating(false)
   }
 
@@ -41,11 +41,16 @@ export default function Users() {
             ? users.map((user, i) => <button key={i} className={styles.user} onClick={loginAs(user.id)}>
               <img src={user.avatar} width={30} />
               <span className={styles.name}>{user.name}</span>
-              <span>{user.balance}$</span>
+              <span>{user.balance.toFixed(2)}$</span>
             </button>)
             : <div>Нет созданных пользователей</div>
           }
-          <Button onClick={handleCreateUser} disabled={creating}>Создать пользователя</Button>
+          <Button onClick={handleCreateUser} disabled={creating}>
+            {creating
+              ? 'Идет создание пользователя...'
+              : 'Создать пользователя'
+            }
+          </Button>
         </div>}
       </div>
     </div>

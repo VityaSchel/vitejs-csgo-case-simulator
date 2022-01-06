@@ -50,5 +50,22 @@
         cursor: pointer;
       }
     }
+
+    .kit {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 10px 20px;
+
+      .images {
+        flex: 1;
+
+        img {
+          width: 50px;
+          object-fit: contain;
+          object-position: center;
+        }
+      }
+    }
   }
 }

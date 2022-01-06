@@ -6,6 +6,7 @@ import {
   Link
 } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { useLiveQuery } from 'dexie-react-hooks'
 import cases from '/lib/cases.js'
 import Roulette from './Roulette'
 import Item from '/components/Item/index'
@@ -31,6 +32,14 @@ function CaseInfo(props:object) {
   const navigate = useNavigate()
   const { user } = useSelector(state => ({ user: state.user }))
 
+  const handleOpen = async () => {
+    const caseItself = await db.items.where({ ownerID: user.id, name: props.case.name }).first()
+    const caseKey = await db.items.where({ ownerID: user.id, name: props.case.keyName }).first()
+    db.items.delete(caseItself.id)
+    db.items.delete(caseKey.id)
+    setOpening(true)
+  }
+
   const handleDrop = item => {
     db.items.add({ name: item.name, ownerID: user.id })
     setPopupItem(item)
@@ -41,7 +50,7 @@ function CaseInfo(props:object) {
       <div className={styles.caseInfo}>
         {opening
           ? <Roulette onDrop={handleDrop} case={props.case} />
-          : <Targets onOpen={() => setOpening(true)} case={props.case} />
+          : <Targets onOpen={handleOpen} case={props.case} />
         }
         <span className={styles.possibleItems}>Предметы, которые могут быть в этом кейсе:</span>
       </div>
@@ -56,6 +65,11 @@ function CaseInfo(props:object) {
 }
 
 function Targets(props:object) {
+  const { user } = useSelector(state => ({ user: state.user }))
+  const items = useLiveQuery(() => db.items.where({ ownerID: user.id }).toArray())?.map(({ name }) => name)
+  const userHasCase = items?.includes(props.case.name)
+  const userHasKey = items?.includes(props.case.keyName)
+
   return (
     <>
       <div className={styles.header}>
@@ -70,7 +84,15 @@ function Targets(props:object) {
         <div className={styles.case}><Item name={props.case.name} /></div>
       </div>
       <span className={styles.hint}>Ключ можно использовать только один раз</span>
-      <Button onClick={props.onOpen}>Использовать ключ</Button>
+      <Button onClick={props.onOpen} disabled={!userHasCase || !userHasKey}>
+        {
+          userHasCase
+            ? userHasKey
+              ? 'Использовать ключ'
+              : 'У вас нет ключа'
+            : 'У вас нет кейса'
+        }
+      </Button>
     </>
   )
 }
