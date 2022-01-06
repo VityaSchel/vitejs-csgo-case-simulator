@@ -6,8 +6,28 @@
   background-color: #1B2730;
   padding: 0 20px;
 
+  @media screen and (max-width: 768px) {
+    align-items: flex-start;
+    padding: 0;
+
+    .balance {
+      margin: 20px;
+    }
+  }
+
   .buttons {
     display: flex;
+    align-items: stretch;
+
+    @media screen and (max-width: 768px) {
+      flex-wrap: wrap;
+    }
+
+    a,
+    .enabled {
+      width: 100%;
+      text-align: center;
+    }
   }
 
   .tab {

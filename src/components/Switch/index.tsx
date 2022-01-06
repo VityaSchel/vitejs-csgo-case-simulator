@@ -13,7 +13,7 @@ export default function Switch() {
         <Tab to='/shop'>Магазин</Tab>
         <Tab to='/users'>Выход</Tab>
       </div>
-      <span>${balance.toFixed(2)}</span>
+      <span className={styles.balance}>${balance.toFixed(2)}</span>
     </div>
   )
 }

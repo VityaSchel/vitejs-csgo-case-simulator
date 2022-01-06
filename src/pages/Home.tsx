@@ -27,7 +27,7 @@ export default function Home() {
 
               return isCase
                 ? (
-                  <Link to={`/open/${caseID}`} style={{ textDecoration: 'none' }} key={i}>
+                  <Link to={`/open/${caseID}`} className={styles.buyButton} key={i}>
                     <Item name={name} />
                   </Link>
                 ) : <InventoryItem name={name} key={i} />
