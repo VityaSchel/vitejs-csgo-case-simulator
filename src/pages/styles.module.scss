@@ -1,0 +1,69 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+
+  .page {
+    width: 1000px;
+    box-shadow: 0 0 5px 0 #000;
+    background-color: #1D262F;
+    color: #fff;
+
+    .switch {
+      display: flex;
+      justify-content: center;
+      background-color: #1B2730;
+
+      .tab {
+        color: #77c2f7;
+        padding: 10px 45px;
+
+        &.enabled {
+          background: linear-gradient(to bottom, #6997bb, #5486ae);
+        }
+      }
+
+      a {
+        text-decoration: none;
+      }
+    }
+
+    .users,
+    .items {
+      padding: 50px;
+    }
+
+    .users {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .user {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        padding: 5px;
+        text-align: left;
+        background-color: transparent;
+        border: 0;
+        color: #fff;
+
+        &:hover {
+          background-color: #1d334b;
+        }
+
+        .name {
+          flex: 1;
+        }
+      }
+    }
+
+    .items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  }
+}
